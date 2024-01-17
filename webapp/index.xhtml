@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <title>Facelet facet</title>
+    <script>
+    function modifier(id,nom,prenom,ville){
+    	document.getElementById("formulaire:idCat").value=id;
+    	document.getElementById("formulaire:idNom").value=nom;
+    	document.getElementById("formulaire:idPrenom").value=prenom;
+    	document.getElementById("formulaire:idVille").value=ville;
+    }
+    </script>
+</h:head>
+
+<h:body>
+    <h4>Formulaire d'ajout</h4>
+    <h:form>
+     <p:panelGrid columns="3">
+    	 <p:outputLabel value="Nom: " />
+        <h:inputText a:placeholder="Votre Nom: "  value="#{categorieMBean.nom}"></h:inputText> <br/>
+         <p:outputLabel value="Prénom: " />
+        <h:inputText  a:placeholder="Votre Prénom: " value="#{categorieMBean.prenom}"></h:inputText> <br/>
+         <p:outputLabel value="Ville: " />
+        <h:inputText a:placeholder="Votre Ville: " value="#{categorieMBean.ville}"></h:inputText> <br/>
+         <h:commandButton action="#{categorieMBean.ajouter()}" value="Ajouter"></h:commandButton>
+         </p:panelGrid>
+        </h:form>
+        <p:accordionPanel>
+         <p:tab title="Listes étudiants">
+          <h:form>
+          <h:outputText value="Liste des étudiants"></h:outputText>
+    <p:dataTable value="#{categorieMBean.tableCategorie}" var="cat" style="margin:auto; text-align:left">
+        <p:column>
+            <f:facet name="header">ID</f:facet>
+            <h:outputText value="#{cat.id}"></h:outputText>
+        </p:column>
+        <p:column>
+            <f:facet name="header">Nom</f:facet>
+            <h:outputText value="#{cat.nom}"></h:outputText>
+        </p:column>
+        <p:column>
+            <f:facet name="header">Prénom</f:facet>
+            <h:outputText value="#{cat.prenom}"></h:outputText>
+        </p:column>
+        <p:column>
+            <f:facet name="header">Ville</f:facet>
+            <h:outputText value="#{cat.ville}"></h:outputText>
+        </p:column>
+      <p:column>
+      <f:facet name="header">Modifier</f:facet>
+      <a href="javascript:modifier('#{cat.id}','#{cat.nom}','#{cat.prenom}','#{cat.ville}')">Modifier</a>
+      </p:column>
+       <p:column>
+            <f:facet name="header">Sup</f:facet>
+          <h:commandButton action="#{categorieMBean.supprimer(cat.id)}" value="Supprimer"></h:commandButton>
+        </p:column>
+    </p:dataTable>
+        </h:form>
+         </p:tab>
+    </p:accordionPanel>
+   
+    <h1>Formulaire pour Modification</h1>
+        <h:form id="formulaire">
+     <p:panelGrid columns="3">
+      <p:outputLabel value="ID: " />
+      <h:inputText id="idCat" value="#{categorieMBean.id}"></h:inputText> <br/>	
+    	 <p:outputLabel value="Nom: " />
+        <h:inputText id="idNom" a:placeholder="Votre Nom: "  value="#{categorieMBean.nom}"></h:inputText> <br/>
+         <p:outputLabel value="Prénom: " />
+        <h:inputText id="idPrenom" a:placeholder="Votre Prénom: " value="#{categorieMBean.prenom}"></h:inputText> <br/>
+         <p:outputLabel value="Ville: " />
+        <h:inputText id="idVille" a:placeholder="Votre Ville: " value="#{categorieMBean.ville}"></h:inputText> <br/>
+      <h:commandButton action="#{categorieMBean.modifier()}" value="Modifier"></h:commandButton>
+         </p:panelGrid>
+        </h:form>
+</h:body>
+</html>
